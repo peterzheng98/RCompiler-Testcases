@@ -44,4 +44,8 @@ impl Stack {
         self.top -= 1;
         self.data[self.top]
     }
+
+    fn empty(&self) -> bool {
+        self.top == 0
+    }
 }
