@@ -143,15 +143,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 echo "Compiling your builtin '${BUILTIN}' with clang..." >&2
-$CLANG -S -emit-llvm --target=riscv32-unknown-elf -O2 -fno-builtin "${BUILTIN}" -o "${TEMPDIR}/builtin.ll" >&2
+$CLANG -S --target=riscv32-unknown-elf -O2 -fno-builtin "${BUILTIN}" -o "${TEMPDIR}/builtin.s.source" >&2
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to compile '${TEMPDIR}/builtin.c'." >&2
-    print_temp_dir
-    exit 1
-fi
-$CLANG -S --target=riscv32-unknown-elf -O2 -fno-builtin "${TEMPDIR}/builtin.ll" -o "${TEMPDIR}/builtin.s.source" >&2
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to compile '${TEMPDIR}/builtin.ll'." >&2
+    echo "Error: Failed to compile '${BUILTIN}.c'." >&2
     print_temp_dir
     exit 1
 fi

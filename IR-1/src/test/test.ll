@@ -7,14 +7,14 @@ declare dso_local void @printlnInt(i32)
 declare dso_local ptr @getString()
 declare dso_local i32 @getInt()
 
-declare dso_local void @builtin_memset(ptr nocapture writeonly, i8, i32, i1 immarg)
-declare dso_local void @builtin_memcpy(ptr nocapture writeonly, ptr nocapture readonly, i32, i1 immarg)
+declare dso_local ptr @builtin_memset(ptr nocapture writeonly, i8, i32)
+declare dso_local ptr @builtin_memcpy(ptr nocapture writeonly, ptr nocapture readonly, i32)
 
 define i32 @main() {
 start:
   %i = alloca [4 x i8], align 4
   %stack = alloca [68 x i8], align 4
-  call void @new(ptr sret([68 x i8]) align 4 %stack) #11
+  call void @new(ptr sret([68 x i8]) align 4 %stack)
   store i32 0, ptr %i, align 4
   br label %bb2
 
@@ -25,18 +25,18 @@ bb2:                                              ; preds = %start
 
 bb3:                                              ; preds = %bb2
   %_7 = call i32 @getInt() align 4
-  call void @push(ptr align 4 %stack, i32 signext %_7) #11
+  call void @push(ptr align 4 %stack, i32 signext %_7)
   %0 = load i32, ptr %i, align 4
   %1 = add i32 %0, 1
   store i32 %1, ptr %i, align 4
   br label %bb2
 
 bb6:                                              ; preds = %bb2, %bb9
-  %_9 = call zeroext i1 @empty(ptr align 4 %stack) #11
+  %_9 = call zeroext i1 @empty(ptr align 4 %stack)
   br i1 %_9, label %bb8, label %bb9
 
 bb9:                                              ; preds = %bb6
-  %_11 = call i32 @pop(ptr align 4 %stack) #11
+  %_11 = call i32 @pop(ptr align 4 %stack)
   call void @printlnInt(i32 signext %_11)
   br label %bb6
 
@@ -48,8 +48,8 @@ bb8:                                              ; preds = %bb6
 define void @new(ptr sret([68 x i8]) align 4 %_0) {
 start:
   %_1 = alloca [64 x i8], align 4
-  call void @builtin_memset(ptr align 4 %_1, i8 0, i32 64, i1 false)
-  call void @builtin_memcpy(ptr align 4 %_0, ptr align 4 %_1, i32 64, i1 false)
+  %ms = call ptr @builtin_memset(ptr align 4 %_1, i8 0, i32 64, i1 false)
+  %mc = call ptr @builtin_memcpy(ptr align 4 %_0, ptr align 4 %_1, i32 64, i1 false)
   %0 = getelementptr i8, ptr %_0, i32 64
   store i32 0, ptr %0, align 4
   ret void
