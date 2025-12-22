@@ -21,20 +21,24 @@ fn is_even(n: i32) -> bool {
 }
 
 fn main() {
+    main_impl();
+    exit(0);
+}
+
+fn main_impl() {
     let n: i32 = getInt();
-    
+
     if (n < 0) {
         printInt(-1); // Invalid input
         return;
     }
-    
+
     let result: i32 = factorial(n);
-    
+
     // Check if result is even or odd
     if (is_even(result)) {
         printInt(result * 2); // Double if even
     } else {
         printInt(result); // Keep original if odd
     }
-    exit(0);
 }

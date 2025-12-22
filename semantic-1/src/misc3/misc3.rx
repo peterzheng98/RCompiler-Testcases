@@ -18,7 +18,7 @@ impl FibState {
     fn new() -> FibState {
         FibState { prev: 0, curr: 1 }
     }
-    
+
     fn next(&mut self) {
         let temp: i32 = self.curr;
         self.curr = self.prev + self.curr;
@@ -27,26 +27,30 @@ impl FibState {
 }
 
 fn main() {
+    main_impl();
+    exit(0);
+}
+
+fn main_impl() {
     let n: i32 = getInt();
-    
+
     if (n <= 0) {
         printInt(0);
         return;
     }
-    
+
     if (n == 1) {
         printInt(1);
         return;
     }
-    
+
     let mut fib: FibState = FibState::new();
     let mut i: i32 = 2;
-    
+
     while (i <= n) {
         fib.next();
         i += 1;
     }
-    
+
     printInt(fib.curr);
-    exit(0);
 }
