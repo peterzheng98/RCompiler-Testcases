@@ -94,8 +94,8 @@ fn apply_stencil(mat: &[[i32; SIZE_U]; SIZE_U]) -> [[i32; SIZE_U]; SIZE_U] {
     return result;
 }
 
-fn transpose_and_add(mat: &[[i32; 40]; 40]) -> [[i32; 40]; 40] {
-    let mut result: [[i32; 40]; 40] = *mat;
+fn transpose_and_add(mat: [[i32; 40]; 40]) -> [[i32; 40]; 40] {
+    let mut result: [[i32; 40]; 40] = mat;
     let mut i: i32 = 0;
     while (i < SIZE) {
         let mut j: i32 = i;
@@ -167,7 +167,7 @@ fn main() {
     let diag_res1: i32 = diagonal_processing(&matrix_c);
     printlnInt(diag_res1);
 
-    let matrix_d: [[i32; SIZE_U]; SIZE_U] = transpose_and_add(&matrix_c);
+    let matrix_d: [[i32; SIZE_U]; SIZE_U] = transpose_and_add(matrix_c);
     let sum2: i32 = sub_matrix_sum(&matrix_d);
     printlnInt(sum2);
 
